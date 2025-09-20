@@ -1,0 +1,22 @@
+# LaTeX auxiliary files
+*.aux
+*.log
+*.toc
+*.out
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
+# Generated PDFs and build directories
+PDF/
+*.pdf
+
+# Editor and OS artifacts
+.DS_Store
+Thumbs.db

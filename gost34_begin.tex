@@ -1,0 +1,175 @@
+% ==== ГОСТ 34: ПРЕАМБУЛА И МАКРОСЫ (без \documentclass и без \begin{document}) ====
+
+% Кодировки и язык (pdfLaTeX; для XeLaTeX используйте fontspec/polyglossia)
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\hyphenation{долж-ность ис-пол-ни-те-ля под-пись функ-ци-о-наль-ные ста-ди-я ком-мен-та-рий про-гра-мма ме-то-ди-ка ис-пы-та-ний}
+\uchyph=1 % разрешаем переносы слов с прописными буквами
+
+% Поля, абзацы, межстрочный
+\usepackage[left=30mm,right=10mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{indentfirst}
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+
+% Таблицы, рисунки, подписи
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{ragged2e} % гибкие выравнивания с переносами в таблицах
+\usepackage{longtable}
+\usepackage{caption}
+\DeclareCaptionLabelSeparator{emdash}{\textemdash\ }
+\captionsetup{labelsep=emdash, justification=raggedright, singlelinecheck=false}
+\renewcommand{\figurename}{Рисунок}
+\renewcommand{\tablename}{Таблица}
+
+% Глобальный стиль таблиц: рамка/сетка, заметные линии
+\setlength{\arrayrulewidth}{0.8pt}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+
+% Обёртки-окружения для таблиц в стиле ГОСТ
+\newenvironment{GOSTtabular}[1]{%
+  \begin{tabular}{|#1|}\hline
+}{%
+  \end{tabular}
+}
+\newenvironment{GOSTlongtable}[1]{%
+  \setlength{\LTleft}{0pt}\setlength{\LTright}{0pt}% выравнивание по центру
+  \centering
+  \begin{longtable}{|#1|}
+  \hline
+}{%
+  \end{longtable}
+}
+
+% Полезные p-колонки
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{\dimexpr#1-2\tabcolsep\relax}}
+\newcolumntype{C}[1]{>{\Centering\arraybackslash}p{\dimexpr#1-2\tabcolsep\relax}}
+\newcolumntype{R}[1]{>{\RaggedLeft\arraybackslash}p{\dimexpr#1-2\tabcolsep\relax}}
+
+% Списки и глубина нумерации (до 1.1.1.1)
+\usepackage{enumitem}
+\setlist{nosep,topsep=0pt,partopsep=0pt}
+\setcounter{secnumdepth}{4}
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\bfseries\large}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\bfseries\normalsize}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries\normalsize}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}{\normalfont\bfseries\normalsize}{\theparagraph}{1em}{}
+
+% Ссылки (ч/б без цветов)
+\usepackage[unicode]{hyperref}
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black}
+
+% ===== Макросы метаданных титула
+\newcommand{\OrgName}{ООО «Aivise Technologies»}
+\newcommand{\SystemName}{Автоматизированная образовательная система персонализированного сопровождения «Aivise»}
+\newcommand{\DocType}{ТЕХНИЧЕСКОЕ ЗАДАНИЕ} % / ЧАСТНОЕ ТЕХНИЧЕСКОЕ ЗАДАНИЕ
+\newcommand{\TopicCode}{AIVISE-EDU/2025-ТЗ}
+\newcommand{\City}{Казань}
+\newcommand{\Year}{2025}
+
+% ===== Титульный лист (вызывается один раз в основном файле)
+\newcommand{\MakeTitlePage}{%
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+{\large \OrgName\par}
+\vspace{25mm}
+{\Large \bfseries \SystemName\par}
+\vspace{10mm}
+{\LARGE \bfseries \DocType\par}
+\vspace{5mm}
+{\large Шифр темы: \TopicCode\par}
+\vfill
+{\City\par}
+{\Year\par}
+\end{center}
+\end{titlepage}
+}
+
+% ===== Перечень сокращений — таблица (GOSTlongtable)
+\newcommand{\AbbrevTable}{%
+\section*{ПЕРЕЧЕНЬ СОКРАЩЕНИЙ И УСЛОВНЫХ НАИМЕНОВАНИЙ}
+\addcontentsline{toc}{section}{ПЕРЕЧЕНЬ СОКРАЩЕНИЙ И УСЛОВНЫХ НАИМЕНОВАНИЙ}
+\begin{GOSTlongtable}{L{0.30\textwidth}|L{0.62\textwidth}}
+\textbf{Термин, сокращение} & \textbf{Определение} \\ \hline
+АС & Автоматизированная система \\ \hline
+АСУ & Автоматизированная система управления \\ \hline
+САПР & Система автоматизированного проектирования \\ \hline
+КТС & Комплекс технических средств \\ \hline
+% Добавляйте строки ниже:
+% АСНИ & Автоматизированная система научных исследований \\ \hline
+\end{GOSTlongtable}
+\clearpage
+}
+
+% ===== Пример обычной таблицы (унифицированный стиль ГОСТ)
+\newcommand{\DemoTable}{%
+\begin{table}[h]
+\centering
+\caption{Наименование таблицы}
+\begin{GOSTtabular}{L{0.3\textwidth}|L{0.65\textwidth}}
+\textbf{Заголовок столбца 1} & \textbf{Заголовок столбца 2} \\ \hline
+Ячейка 1 & Ячейка 2 \\ \hline
+Ячейка 3 & Ячейка 4 \\ \hline
+\end{GOSTtabular}
+\end{table}
+}
+
+% ===== Таблицы "СОСТАВИЛИ / СОГЛАСОВАНО" в стиле эталона
+\newcommand{\SignatureTables}{%
+  \clearpage
+  \thispagestyle{plain}%
+  \begin{center}
+    {\small \TopicCode. Техническое задание / Частное техническое задание}
+  \end{center}
+
+  \vspace{2mm}
+  \begin{center}\textbf{\MakeUppercase{СОСТАВИЛИ}}\end{center}
+  \vspace{1mm}
+
+  \begin{center}
+  \begin{minipage}{\textwidth}
+    \setlength{\tabcolsep}{3pt}% ужимаем отступы внутри таблицы подписей
+    \begin{GOSTtabular}{L{45mm}|L{32mm}|L{37mm}|C{24mm}|C{18mm}}
+      \textbf{Наименование организации, предприятия} &
+      \textbf{Должность исполнителя} &
+      \textbf{Фамилия, имя, отчество} &
+      \textbf{Подпись} &
+      \textbf{Дата} \\ \hline
+      & & & & \\ \hline
+      & & & & \\ \hline
+      & & & & \\ \hline
+      & & & & \\ \hline
+    \end{GOSTtabular}
+  \end{minipage}
+  \end{center}
+
+  \vspace{6mm}
+  \begin{center}\textbf{\MakeUppercase{СОГЛАСОВАНО}}\end{center}
+  \vspace{1mm}
+
+  \begin{center}
+  \begin{minipage}{\textwidth}
+    \setlength{\tabcolsep}{3pt}% ужимаем отступы внутри таблицы подписей
+    \begin{GOSTtabular}{L{45mm}|L{32mm}|L{37mm}|C{24mm}|C{18mm}}
+      \textbf{Наименование организации, предприятия} &
+      \textbf{Должность исполнителя} &
+      \textbf{Фамилия, имя, отчество} &
+      \textbf{Подпись} &
+      \textbf{Дата} \\ \hline
+      & & & & \\ \hline
+      & & & & \\ \hline
+      & & & & \\ \hline
+      & & & & \\ \hline
+    \end{GOSTtabular}
+  \end{minipage}
+  \end{center}
+
+  \clearpage
+}
